@@ -18,8 +18,8 @@ public class PlayerCharacter : GameObject
         IsActiveControl = true;
         Health.AddListener(SetHealthGauge);
         Mana.AddListener(SetManaGauge);
-        _healthGauge = "■■■■■";
-        _manaGauge = "■■■■■";
+        // _healthGauge = "■■■■■";
+        // _manaGauge = "■■■■■";
         _inventory = new Inventory(this);
     }
 
@@ -101,8 +101,8 @@ public class PlayerCharacter : GameObject
     
     public void Render()
     {
-        DrawHealthGauge();
-        DrawManaGauge();
+        // DrawHealthGauge();
+        // DrawManaGauge();
         _inventory.Render();
     }
 
@@ -149,19 +149,19 @@ public class PlayerCharacter : GameObject
         switch (Mana.Value)
         {
             case 5:
-                _healthGauge = "■■■■■";
+                _manaGauge = "■■■■■";
                 break;
             case 4:
-                _healthGauge = "■■■■□";
+                _manaGauge = "■■■■□";
                 break;
             case 3:
-                _healthGauge = "■■■□□";
+                _manaGauge = "■■■□□";
                 break;
             case 2:
-                _healthGauge = "■■□□□";
+                _manaGauge = "■■□□□";
                 break;
             case 1:
-                _healthGauge = "■□□□□";
+                _manaGauge = "■□□□□";
                 break;
         }
     }

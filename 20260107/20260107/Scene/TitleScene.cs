@@ -18,7 +18,6 @@ public class TitleScene : Scene
     public override void Enter()
     {
        _titleMenu.Reset();
-       Debug.Log("타이틀 씬 진입");
     }
 
     public override void Update()
