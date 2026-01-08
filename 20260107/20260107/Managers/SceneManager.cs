@@ -52,4 +52,5 @@ public static class SceneManager
     {
         Current?.Render();
     }
+    
 }

@@ -25,22 +25,50 @@ public class BattleScene : Scene
     
     public override void Enter()
     {
+        if (_player.Field != null)
+        {
+            _player.Field[_player.Position.Y, _player.Position.X].OnTileObject = null;
+        }
         _player.Field = _battleField;
-        _player.Position = new Vector(4, 3);
+        _player.Position = new Vector(5, 5);
+        _battleField[_player.Position.Y, _player.Position.X].OnTileObject = _player;
     }
 
     public override void Update()
     {
-        
+        _player.Update();
+        // _player.Render();
+        if (InputManager.GetKey(ConsoleKey.Escape))
+        {
+            SceneManager.ChangePrevScene();
+        }
     }
 
     public override void Render()
     {
-        
+        Console.Clear();
+        Console.SetCursorPosition(10, 0);
+        Console.WriteLine("전투 시작");
+        PrintField();
+        // _player.Render();
     }
 
     public override void Exit()
     {
         
+        
+    }
+    
+    public void PrintField()
+    {
+        for (int y = 0; y < _battleField.GetLength(0); y++)
+        {
+            for (int x = 0; x < _battleField.GetLength(1); x++)
+            {
+                _battleField[y, x].Print();
+            }
+
+            Console.WriteLine();
+        }
     }
 }
