@@ -30,8 +30,7 @@ public class TownScene : Scene
         _field[2, 15].OnTileObject = new Potion() { Name = "Potion2"};
         _field[7, 3].OnTileObject = new Potion() { Name = "Potion3"};
         _field[9, 19].OnTileObject = new Potion() { Name = "Potion4"};
-        _field[5, 15].OnTileObject = new Potion() { Name = "Monster"};
-        
+        _field[5, 15].OnTileObject = new Monster();
         Debug.Log("타운 씬 진입");
     }
 

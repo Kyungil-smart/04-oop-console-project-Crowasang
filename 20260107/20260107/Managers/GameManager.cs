@@ -5,6 +5,7 @@ public class GameManager
     public static bool IsGameOver { get; set; }
     public const string GameName = "아무튼 RPG";
     private PlayerCharacter _player;
+    private Monster _monster;
     
     public void Run()
     {
@@ -35,11 +36,12 @@ public class GameManager
         IsGameOver = false;
         SceneManager.OnChangeScene += InputManager.ResetKey;
         _player = new PlayerCharacter();
-        
+        _monster = new Monster();
         SceneManager.AddScene("Title", new TitleScene());
         SceneManager.AddScene("Story", new StoryScene());
         SceneManager.AddScene("Town", new TownScene(_player));
         SceneManager.AddScene("Log", new LogScene());
+        SceneManager.AddScene("Monster", new BattleScene(_player, _monster));
         
         SceneManager.Change("Title");
         

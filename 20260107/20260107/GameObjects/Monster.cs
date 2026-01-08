@@ -18,6 +18,6 @@ public class Monster : GameObject, IInteractable
 
     public void Interact(PlayerCharacter player)
     {
-        
+        SceneManager.Change(new BattleScene(player, this));
     }
 }
