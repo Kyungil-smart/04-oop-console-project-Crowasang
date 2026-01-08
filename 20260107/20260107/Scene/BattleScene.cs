@@ -18,6 +18,7 @@ public class BattleScene : Scene
             {
                 Vector pos = new Vector(x, y);
                 _battleField[y, x] = new Tile(pos);
+                
             }
         }
     }
@@ -25,12 +26,7 @@ public class BattleScene : Scene
     public override void Enter()
     {
         _player.Field = _battleField;
-        _player.Position = new Vector(5, 5);
-        _battleField[5, 5].OnTileObject = _player;
-
-        // 몬스터 오른쪽에 배치
-        _monster.Position = new Vector(24, 5);
-        _battleField[5, 24].OnTileObject = _monster;
+        _player.Position = new Vector(4, 3);
     }
 
     public override void Update()
