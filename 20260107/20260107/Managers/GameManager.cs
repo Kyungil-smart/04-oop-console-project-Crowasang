@@ -41,7 +41,7 @@ public class GameManager
         SceneManager.AddScene("Story", new StoryScene());
         SceneManager.AddScene("Town", new TownScene(_player));
         SceneManager.AddScene("Log", new LogScene());
-        SceneManager.AddScene("Monster", new BattleScene(_player, _monster));
+        SceneManager.AddScene("Battle", new BattleScene(_player, _monster));
         
         SceneManager.Change("Title");
         

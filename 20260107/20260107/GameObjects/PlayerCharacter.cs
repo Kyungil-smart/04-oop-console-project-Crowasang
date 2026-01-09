@@ -6,6 +6,7 @@ public class PlayerCharacter : GameObject
     public ObservableProperty<int> Mana = new ObservableProperty<int>(5);
     public Tile[,] Field { get; set; }
     private Inventory _inventory;
+    private BattleScene _battleScene;
     private string _healthGauge;
     private string _manaGauge;
     
@@ -18,8 +19,6 @@ public class PlayerCharacter : GameObject
         IsActiveControl = true;
         Health.AddListener(SetHealthGauge);
         Mana.AddListener(SetManaGauge);
-        // _healthGauge = "■■■■■";
-        // _manaGauge = "■■■■■";
         _inventory = new Inventory(this);
     }
 
@@ -29,10 +28,12 @@ public class PlayerCharacter : GameObject
         {
             HandleControl();
         }
+
         if (InputManager.GetKey(ConsoleKey.UpArrow))
         {
             Move(Vector.Up);
             _inventory.SelectUp();
+
         }
         
         if (InputManager.GetKey(ConsoleKey.DownArrow))
@@ -62,13 +63,18 @@ public class PlayerCharacter : GameObject
                 Health.Value = 1;
             }
         }
+
+        
+        
     }
+    
 
     public void HandleControl()
     {
         _inventory.IsActive = !_inventory.IsActive;
         IsActiveControl = !_inventory.IsActive;
     }
+    
     
     private void Move(Vector direction)
     {
@@ -172,5 +178,13 @@ public class PlayerCharacter : GameObject
     public void Heal(int value)
     {
         Health.Value += value;
+    }
+    public void EnterBattle()
+    {
+        IsActiveControl = false;
+    }
+    public void ExitBattle()
+    {
+        IsActiveControl = true;
     }
 }

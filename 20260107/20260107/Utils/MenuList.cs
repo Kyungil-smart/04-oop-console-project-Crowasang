@@ -75,7 +75,6 @@ public class MenuList
     public void SelectUp()
     {
         _currentIndex--;
-
         if (_currentIndex < 0) _currentIndex = 0;
     }
 

@@ -18,19 +18,20 @@ public class TownScene : Scene
                 _field[y, x] = new Tile(pos);
             }
         }
+        _player.Field = _field;
+        _player.Position = new Vector(4, 3);
+        _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
         
     }
     public override void Enter()
     {
-        _player.Field = _field;
-        _player.Position = new Vector(4, 3);
-        _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
-
         _field[3, 5].OnTileObject = new Potion() { Name = "Potion1"};
         _field[2, 15].OnTileObject = new Potion() { Name = "Potion2"};
         _field[7, 3].OnTileObject = new Potion() { Name = "Potion3"};
         _field[9, 19].OnTileObject = new Potion() { Name = "Potion4"};
         _field[5, 15].OnTileObject = new Monster();
+        _player.Field = _field;
+        _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
         Debug.Log("타운 씬 진입");
     }
 

@@ -44,7 +44,6 @@ public class Inventory
     public void Select()
     {
         if (!IsActive) return;
- 
         _itemMenu.Select();
     }
 
@@ -59,4 +58,6 @@ public class Inventory
         if (!IsActive) return;
         _itemMenu.SelectDown();
     }
+
+    
 }
