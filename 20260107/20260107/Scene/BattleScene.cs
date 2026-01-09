@@ -6,6 +6,8 @@ public class BattleScene : Scene
     private PlayerCharacter _player;
     private Monster _monster;
     private MenuList _battleMenu;
+    private Tile[,] _returnField;
+    private Vector _returnPosition;
     
     public bool IsActive { get; set; }
     public BattleScene(PlayerCharacter player, Monster monster) => Init(player, monster);
