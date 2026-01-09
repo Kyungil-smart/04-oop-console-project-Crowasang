@@ -90,6 +90,10 @@ public class PlayerCharacter : GameObject
             if (nextTileObject is IInteractable)
             {
                 (nextTileObject as IInteractable).Interact(this);
+                if (nextTileObject is Monster)
+                {
+                    return;
+                }
             }
         }
         Field[Position.Y, Position.X].OnTileObject = null;

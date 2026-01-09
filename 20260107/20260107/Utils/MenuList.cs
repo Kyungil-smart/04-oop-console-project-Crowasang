@@ -96,8 +96,8 @@ public class MenuList
             Console.SetCursorPosition(x + 1, y);
             if (i == _currentIndex)
             {
-                "->".Print(ConsoleColor.Green);
-                _menus[i].text.Print(ConsoleColor.Green);
+                "->".Print(ConsoleColor.Cyan);
+                _menus[i].text.Print(ConsoleColor.Cyan);
                 continue;
             }
             else

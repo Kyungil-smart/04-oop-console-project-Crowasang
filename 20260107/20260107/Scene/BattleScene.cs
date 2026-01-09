@@ -18,7 +18,6 @@ public class BattleScene : Scene
             {
                 Vector pos = new Vector(x, y);
                 _battleField[y, x] = new Tile(pos);
-                
             }
         }
     }
@@ -30,8 +29,9 @@ public class BattleScene : Scene
             _player.Field[_player.Position.Y, _player.Position.X].OnTileObject = null;
         }
         _player.Field = _battleField;
-        _player.Position = new Vector(5, 5);
+        _player.Position = new Vector(5, 3);
         _battleField[_player.Position.Y, _player.Position.X].OnTileObject = _player;
+        
     }
 
     public override void Update()
@@ -50,7 +50,7 @@ public class BattleScene : Scene
         Console.SetCursorPosition(10, 0);
         Console.WriteLine("전투 시작");
         PrintField();
-        // _player.Render();
+        
     }
 
     public override void Exit()
