@@ -7,7 +7,19 @@ public class Monster : GameObject, IInteractable
     public string Name { get; set; }
     private string _healthGauge;
     private ConsoleColor _healthColor;
-    public bool IsDead => Health.Value <= 0;
+    public bool IsDead
+    {
+        get{
+            if (Health.Value <= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
     public Tile[,] Field { get; set; }
     public Monster()
     {
