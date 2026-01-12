@@ -50,19 +50,21 @@ public class BattleScene : Scene
 
     public override void Update()
     {
-        
-        if (InputManager.GetKey(ConsoleKey.UpArrow))
-            _battleMenu.SelectUp();
-
-        if (InputManager.GetKey(ConsoleKey.DownArrow))
-            _battleMenu.SelectDown();
-
-        if (InputManager.GetKey(ConsoleKey.Enter))
-            _battleMenu.Select();
-        if (InputManager.GetKey(ConsoleKey.T))
+        if (_battleTurn == BattleTurn.mTurn)
         {
-            _player.Health.Value--;
-            _monster.Health.Value--;
+            mAttack();
+            return;
+        }
+        if (_battleTurn == BattleTurn.pTurn)
+        {
+            if (InputManager.GetKey(ConsoleKey.UpArrow))
+                _battleMenu.SelectUp();
+
+            if (InputManager.GetKey(ConsoleKey.DownArrow))
+                _battleMenu.SelectDown();
+
+            if (InputManager.GetKey(ConsoleKey.Enter))
+                _battleMenu.Select();
         }
     }
 
@@ -112,7 +114,16 @@ public class BattleScene : Scene
 
     public void Attack()
     {
-        
+        if (_battleTurn != BattleTurn.pTurn) return;
+        int Damage = 10;
+        _monster.Health.Value -= Damage;
+        if (_monster.Health.Value <= 0)
+        {
+            _monster.Health.Value = 0;
+            Victory();
+        }
+        _battleTurn = BattleTurn.mTurn;
+        _battleTurn = BattleTurn.mTurn;
     }
 
     public void Escape()
@@ -144,11 +155,39 @@ public class BattleScene : Scene
         Console.SetCursorPosition(_battleField.GetLength(1) - 7, 2);
         _monster.DrawHealthGauge();
     }
+    
+    public void Victory()
+    {
+        Console.SetCursorPosition(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
+        Console.WriteLine("몬스터를 쓰러트렸다");
+        _player.Field = _prevPlayerField;
+        _player.Position = _prevPlayerPosition;
+        
+        if (_prevPlayerField != null)
+        {
+            _prevPlayerField[_prevPlayerPosition.Y, _prevPlayerPosition.X].OnTileObject = _player;
+        }
+        
+        _player.ExitBattle();
+        SceneManager.Change("Town");
+    }
+
+    public void mAttack()
+    {
+        if (_battleTurn != BattleTurn.mTurn) return;
+        int mDamage = 10;
+        _player.Health.Value -= mDamage;
+        if (_player.Health.Value <= 0)
+        {
+            _player.Health.Value = 0;
+            GameManager.IsGameOver = true;
+        }
+        _battleTurn = BattleTurn.pTurn;
+    }
 }
 
 public enum BattleTurn
 {
     pTurn,
     mTurn,
-    end,
 }

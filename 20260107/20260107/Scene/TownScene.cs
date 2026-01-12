@@ -37,7 +37,6 @@ public class TownScene : Scene
         {
             _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
         }
-
     }
 
     public override void Update()
