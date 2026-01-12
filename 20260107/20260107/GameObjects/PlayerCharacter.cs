@@ -2,7 +2,7 @@
 
 public class PlayerCharacter : GameObject
 {
-    private const int _maxHealth = 100;
+    public const int _maxHealth = 100;
     public ObservableProperty<int> Health = new ObservableProperty<int>(_maxHealth);
     public ObservableProperty<int> Mana = new ObservableProperty<int>(5);
     public Tile[,] Field { get; set; }

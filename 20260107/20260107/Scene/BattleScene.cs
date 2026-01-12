@@ -8,7 +8,7 @@ public class BattleScene : Scene
     private MenuList _battleMenu;
     private Vector _prevPlayerPosition;
     private Tile[,] _prevPlayerField;
-    
+    private BattleTurn _battleTurn;
     public bool IsActive { get; set; }
     public BattleScene(PlayerCharacter player, Monster monster) => Init(player, monster);
 
@@ -30,6 +30,7 @@ public class BattleScene : Scene
         _battleMenu = new MenuList();
         _battleMenu.Add("공격", Attack);
         _battleMenu.Add("도망치기", Escape);
+        _battleTurn = BattleTurn.pTurn;
     }
 
     public override void Enter()
@@ -72,7 +73,22 @@ public class BattleScene : Scene
         Console.WriteLine("전투 시작");
         DrawBattle();
         PrintField();
-        _battleMenu.Render(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
+        Console.SetCursorPosition(6, 3);
+        if (_battleTurn == BattleTurn.pTurn)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("【 플레이어 턴 】");
+            Console.ResetColor();
+            _battleMenu.Render(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
+        }
+        else if (_battleTurn == BattleTurn.mTurn)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("【 몬스터 턴 】");
+            Console.ResetColor();
+            Console.SetCursorPosition(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
+            Console.WriteLine("대기중......");
+        }
     }
 
     public override void Exit()
@@ -122,10 +138,17 @@ public class BattleScene : Scene
         Console.SetCursorPosition(4, 2);
         _player.DrawHealthGauge();
         Console.SetCursorPosition(_battleField.GetLength(1) - 9, 1);
-        Console.Write($"{_monster.Health.Value} / 50");
+        Console.Write($"{_monster.Health.Value} / {_monster._maxHealth}");
         Console.SetCursorPosition(_battleField.GetLength(1) - 11, 2);
         Console.Write("HP: ");
         Console.SetCursorPosition(_battleField.GetLength(1) - 7, 2);
         _monster.DrawHealthGauge();
     }
+}
+
+public enum BattleTurn
+{
+    pTurn,
+    mTurn,
+    end,
 }

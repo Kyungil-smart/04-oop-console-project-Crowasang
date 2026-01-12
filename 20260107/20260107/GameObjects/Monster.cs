@@ -2,7 +2,7 @@
 
 public class Monster : GameObject, IInteractable
 {
-    private const int _maxHealth = 50;
+    public int _maxHealth = 50;
     public ObservableProperty<int> Health;
     public string Name { get; set; }
     private string _healthGauge;
