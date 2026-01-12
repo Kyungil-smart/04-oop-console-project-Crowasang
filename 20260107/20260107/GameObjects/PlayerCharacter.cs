@@ -2,14 +2,15 @@
 
 public class PlayerCharacter : GameObject
 {
-    public ObservableProperty<int> Health = new ObservableProperty<int>(5);
+    private const int _maxHealth = 100;
+    public ObservableProperty<int> Health = new ObservableProperty<int>(100);
     public ObservableProperty<int> Mana = new ObservableProperty<int>(5);
     public Tile[,] Field { get; set; }
     private Inventory _inventory;
     private BattleScene _battleScene;
     private string _healthGauge;
     private string _manaGauge;
-
+    private ConsoleColor _healthColor;
     
     public bool IsActiveControl { get; private set; }
     public PlayerCharacter() => Init();
@@ -21,7 +22,7 @@ public class PlayerCharacter : GameObject
         Health.AddListener(SetHealthGauge);
         Mana.AddListener(SetManaGauge);
         _inventory = new Inventory(this);
-        
+        SetHealthGauge(_maxHealth);
     }
 
     public void Update()
@@ -65,9 +66,6 @@ public class PlayerCharacter : GameObject
                 Health.Value = 1;
             }
         }
-
-        
-        
     }
     
 
@@ -116,6 +114,7 @@ public class PlayerCharacter : GameObject
         // DrawHealthGauge();
         // DrawManaGauge();
         _inventory.Render();
+        Debug.LogWarning($"Health: {Health.Value}");
     }
 
     public void AddItem(Item item)
@@ -131,28 +130,18 @@ public class PlayerCharacter : GameObject
     public void DrawHealthGauge()
     {
         // Console.SetCursorPosition(0, 2);
-        _healthGauge.Print(ConsoleColor.Red);
+        _healthGauge.Print(_healthColor);
     }
     public void SetHealthGauge(int health)
     {
-        switch (Health.Value)
-        {
-            case 5:
-                _healthGauge = "■■■■■";
-                break;
-            case 4:
-                _healthGauge = "■■■■□";
-                break;
-            case 3:
-                _healthGauge = "■■■□□";
-                break;
-            case 2:
-                _healthGauge = "■■□□□";
-                break;
-            case 1:
-                _healthGauge = "■□□□□";
-                break;
-        }
+        float ratio = (float)health / _maxHealth;
+        if (ratio >= 0.8f) _healthGauge = "■■■■■";
+        else if (ratio >= 0.6f) _healthGauge = "■■■■□";
+        else if (ratio >= 0.4f) _healthGauge = "■■■□□";
+        else if (ratio >= 0.2f) _healthGauge = "■■□□□";
+        else if (ratio > 0) _healthGauge = "■□□□□";
+        else _healthGauge = "□□□□□";
+        _healthColor = getHpColor(ratio);
     }
 
     public void SetManaGauge(int mana)
@@ -188,5 +177,12 @@ public class PlayerCharacter : GameObject
     public void ExitBattle()
     {
         IsActiveControl = true;
+    }
+
+    ConsoleColor getHpColor(float ratio)
+    {
+        if (ratio >= 0.7f) return ConsoleColor.Green;
+        else if (ratio >= 0.3f) return ConsoleColor.Yellow;
+        return ConsoleColor.Red;
     }
 }

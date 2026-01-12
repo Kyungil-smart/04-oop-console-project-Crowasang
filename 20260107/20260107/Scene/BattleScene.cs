@@ -55,6 +55,10 @@ public class BattleScene : Scene
 
         if (InputManager.GetKey(ConsoleKey.Enter))
             _battleMenu.Select();
+        if (InputManager.GetKey(ConsoleKey.T))
+        {
+            _player.Health.Value--;
+        }
     }
 
     public override void Render()
