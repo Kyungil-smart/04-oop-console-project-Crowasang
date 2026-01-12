@@ -20,6 +20,15 @@ public class TownScene : Scene
                 _field[y, x] = new Tile(pos);
             }
         }
+        SpawnMonster();
+        _field[3, 5].OnTileObject = new Potion() { Name = "Potion1"};
+        _field[2, 15].OnTileObject = new Potion() { Name = "Potion2"};
+        _player.Field = _field;
+        _player.Position = new Vector(4, 3);
+        _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
+    }
+    private void SpawnMonster()
+    {
         Monster slime = new Slime();
         Monster goblin = new Goblin();
 
@@ -27,11 +36,6 @@ public class TownScene : Scene
         _monsters.Add(goblin);
         _field[6, 17].OnTileObject = slime;
         _field[3, 15].OnTileObject = goblin;
-        _field[3, 5].OnTileObject = new Potion() { Name = "Potion1"};
-        _field[2, 15].OnTileObject = new Potion() { Name = "Potion2"};
-        _player.Field = _field;
-        _player.Position = new Vector(4, 3);
-        _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
     }
     public override void Enter()
     {
