@@ -9,9 +9,5 @@ public abstract class Item : GameObject
     public bool InInventory { get => Inventory != null; }
     public PlayerCharacter Owner{ get; set; }
     public abstract void Use();
-
-    public void PrintInfo()
-    {
-        
-    }
+    
 }

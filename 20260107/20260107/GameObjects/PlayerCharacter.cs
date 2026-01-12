@@ -4,14 +4,12 @@ public class PlayerCharacter : GameObject
 {
     public const int _maxHealth = 100;
     public ObservableProperty<int> Health = new ObservableProperty<int>(_maxHealth);
-    public ObservableProperty<int> Mana = new ObservableProperty<int>(5);
     public Tile[,] Field { get; set; }
     private Inventory _inventory;
     private BattleScene _battleScene;
     private string _healthGauge;
     private string _manaGauge;
     private ConsoleColor _healthColor;
-    public bool HasPosition { get; set; } = false;
     public bool IsActiveControl { get; private set; }
     public PlayerCharacter() => Init();
     
@@ -20,7 +18,6 @@ public class PlayerCharacter : GameObject
         Symbol = 'P';
         IsActiveControl = true;
         Health.AddListener(SetHealthGauge);
-        // Mana.AddListener(SetManaGauge);
         _inventory = new Inventory(this);
         SetHealthGauge(_maxHealth);
     }
@@ -118,11 +115,6 @@ public class PlayerCharacter : GameObject
         _inventory.Add(item);
     }
     
-    public void DrawManaGauge()
-    {
-        // Console.SetCursorPosition(Position.X - 2, Position.Y - 1);
-        _manaGauge.Print(ConsoleColor.Blue);
-    }
     public void DrawHealthGauge()
     {
         // Console.SetCursorPosition(0, 2);
@@ -143,28 +135,6 @@ public class PlayerCharacter : GameObject
         }
         _healthColor = getHpColor(ratio);
     }
-
-    // public void SetManaGauge(int mana)
-    // {
-    //     switch (Mana.Value)
-    //     {
-    //         case 5:
-    //             _manaGauge = "■■■■■";
-    //             break;
-    //         case 4:
-    //             _manaGauge = "■■■■□";
-    //             break;
-    //         case 3:
-    //             _manaGauge = "■■■□□";
-    //             break;
-    //         case 2:
-    //             _manaGauge = "■■□□□";
-    //             break;
-    //         case 1:
-    //             _manaGauge = "■□□□□";
-    //             break;
-    //     }
-    // }
     public void Heal(int value)
     {
         Health.Value += value;

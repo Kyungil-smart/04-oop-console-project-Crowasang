@@ -95,7 +95,6 @@ public class BattleScene : Scene
 
     public override void Exit()
     {
-        // _player.ExitBattle();
         _battleMenu.Reset();
     }
     

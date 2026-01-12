@@ -30,7 +30,6 @@ public class GameManager
         }
     }
 
-
     public void Init()
     {
         IsGameOver = false;

@@ -3,8 +3,6 @@ public struct Tile
 {
     // 타일 위에 뭐가 올라와있는지?
     public GameObject OnTileObject { get; set; }
-    // 타일위에 올라서면 발생해야 하는 이벤트
-    public event Action OnStepPlayer;
     // 자기 좌표
     public Vector Position { get; set; }
     
