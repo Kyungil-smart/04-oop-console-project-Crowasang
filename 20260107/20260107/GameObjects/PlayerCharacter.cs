@@ -11,7 +11,7 @@ public class PlayerCharacter : GameObject
     private string _healthGauge;
     private string _manaGauge;
     private ConsoleColor _healthColor;
-    
+    public bool HasPosition { get; set; } = false;
     public bool IsActiveControl { get; private set; }
     public PlayerCharacter() => Init();
     
@@ -20,7 +20,7 @@ public class PlayerCharacter : GameObject
         Symbol = 'P';
         IsActiveControl = true;
         Health.AddListener(SetHealthGauge);
-        Mana.AddListener(SetManaGauge);
+        // Mana.AddListener(SetManaGauge);
         _inventory = new Inventory(this);
         SetHealthGauge(_maxHealth);
     }
@@ -106,15 +106,11 @@ public class PlayerCharacter : GameObject
         Field[nextPos.Y, nextPos.X].OnTileObject = this;
         Position = nextPos;
         
-        // Debug.LogWarning($"플레이어 이동 : ({current.X},{current.Y}) -> ({nextPos.X},{nextPos.Y})");
     }
     
     public void Render()
     {
-        // DrawHealthGauge();
-        // DrawManaGauge();
         _inventory.Render();
-        Debug.LogWarning($"Health: {Health.Value}");
     }
 
     public void AddItem(Item item)
@@ -148,27 +144,27 @@ public class PlayerCharacter : GameObject
         _healthColor = getHpColor(ratio);
     }
 
-    public void SetManaGauge(int mana)
-    {
-        switch (Mana.Value)
-        {
-            case 5:
-                _manaGauge = "■■■■■";
-                break;
-            case 4:
-                _manaGauge = "■■■■□";
-                break;
-            case 3:
-                _manaGauge = "■■■□□";
-                break;
-            case 2:
-                _manaGauge = "■■□□□";
-                break;
-            case 1:
-                _manaGauge = "■□□□□";
-                break;
-        }
-    }
+    // public void SetManaGauge(int mana)
+    // {
+    //     switch (Mana.Value)
+    //     {
+    //         case 5:
+    //             _manaGauge = "■■■■■";
+    //             break;
+    //         case 4:
+    //             _manaGauge = "■■■■□";
+    //             break;
+    //         case 3:
+    //             _manaGauge = "■■■□□";
+    //             break;
+    //         case 2:
+    //             _manaGauge = "■■□□□";
+    //             break;
+    //         case 1:
+    //             _manaGauge = "■□□□□";
+    //             break;
+    //     }
+    // }
     public void Heal(int value)
     {
         Health.Value += value;

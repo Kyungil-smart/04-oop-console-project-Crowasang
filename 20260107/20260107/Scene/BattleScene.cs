@@ -6,9 +6,8 @@ public class BattleScene : Scene
     private PlayerCharacter _player;
     private Monster _monster;
     private MenuList _battleMenu;
-    private Tile[,] _returnField;
-    private Vector _returnPlayerPos;
-    private Vector _monsterPos;
+    private Vector _prevPlayerPosition;
+    private Tile[,] _prevPlayerField;
     
     public bool IsActive { get; set; }
     public BattleScene(PlayerCharacter player, Monster monster) => Init(player, monster);
@@ -17,6 +16,8 @@ public class BattleScene : Scene
     {
         _player = player;
         _monster = monster;
+        _prevPlayerPosition = _player.Position;
+        _prevPlayerField = _player.Field;
         for (int y = 0; y < _battleField.GetLength(0); y++)
         {
             for (int x = 0; x < _battleField.GetLength(1); x++)
@@ -33,9 +34,6 @@ public class BattleScene : Scene
 
     public override void Enter()
     {
-        _returnField = _player.Field;
-        _returnPlayerPos = _player.Position;
-        _monsterPos = _monster.Position;
         if (_player.Field != null)
         {
             _player.Field[_player.Position.Y, _player.Position.X].OnTileObject = null;
@@ -79,7 +77,7 @@ public class BattleScene : Scene
 
     public override void Exit()
     {
-        _player.ExitBattle();
+        // _player.ExitBattle();
         _battleMenu.Reset();
     }
     
@@ -103,7 +101,16 @@ public class BattleScene : Scene
 
     public void Escape()
     {
-        SceneManager.ChangePrevScene();
+        _battleField[_player.Position.Y, _player.Position.X].OnTileObject = null;
+        _battleField[_monster.Position.Y, _monster.Position.X].OnTileObject = null;
+        _player.Field = _prevPlayerField;
+        _player.Position = _prevPlayerPosition;
+        if (_prevPlayerField != null)
+        {
+            _prevPlayerField[_prevPlayerPosition.Y, _prevPlayerPosition.X].OnTileObject = _player;
+        }
+        _player.ExitBattle();
+        SceneManager.Change("Town");
     }
 
     public void DrawBattle()
