@@ -4,6 +4,7 @@ public class TownScene : Scene
 {
     private Tile[,] _field = new Tile[10, 20];
     private PlayerCharacter _player;
+    private Monster _monster;
     
     public TownScene(PlayerCharacter player) => Init(player);
     
@@ -21,7 +22,6 @@ public class TownScene : Scene
         _player.Field = _field;
         _player.Position = new Vector(4, 3);
         _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
-        
     }
     public override void Enter()
     {

@@ -42,6 +42,7 @@ public class BattleScene : Scene
         _monster.Position = new Vector(25, 3);
         _battleField[_monster.Position.Y, _monster.Position.X].OnTileObject = _monster;
         _player.EnterBattle();
+        _monster.EnterBattle();
     }
 
     public override void Update()
@@ -58,6 +59,7 @@ public class BattleScene : Scene
         if (InputManager.GetKey(ConsoleKey.T))
         {
             _player.Health.Value--;
+            _monster.Health.Value--;
         }
     }
 
@@ -66,8 +68,8 @@ public class BattleScene : Scene
         Console.Clear();
         Console.SetCursorPosition(10, 0);
         Console.WriteLine("전투 시작");
-        PrintField();
         DrawBattle();
+        PrintField();
         _battleMenu.Render(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
     }
 
@@ -103,8 +105,16 @@ public class BattleScene : Scene
     public void DrawBattle()
     {
         Console.SetCursorPosition(0, 1);
+        Console.Write($"{_player.Health.Value} / 100");
+        Console.SetCursorPosition(0, 2);
         Console.Write("HP: ");
-        Console.SetCursorPosition(4, 1);
+        Console.SetCursorPosition(4, 2);
         _player.DrawHealthGauge();
+        Console.SetCursorPosition(_battleField.GetLength(1) - 9, 1);
+        Console.Write($"{_monster.Health.Value} / 50");
+        Console.SetCursorPosition(_battleField.GetLength(1) - 11, 2);
+        Console.Write("HP: ");
+        Console.SetCursorPosition(_battleField.GetLength(1) - 7, 2);
+        _monster.DrawHealthGauge();
     }
 }
