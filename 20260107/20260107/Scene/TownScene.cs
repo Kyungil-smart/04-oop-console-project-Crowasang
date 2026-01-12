@@ -47,7 +47,6 @@ public class TownScene : Scene
                 RemoveMonster(_monsters[i]);
                 _monsters.RemoveAt(i);
             }
-            
         }
 
         if (_monsters.Count <= 0)
