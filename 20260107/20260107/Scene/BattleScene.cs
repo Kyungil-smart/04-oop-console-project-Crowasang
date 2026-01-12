@@ -7,7 +7,8 @@ public class BattleScene : Scene
     private Monster _monster;
     private MenuList _battleMenu;
     private Tile[,] _returnField;
-    private Vector _returnPosition;
+    private Vector _returnPlayerPos;
+    private Vector _monsterPos;
     
     public bool IsActive { get; set; }
     public BattleScene(PlayerCharacter player, Monster monster) => Init(player, monster);
@@ -32,6 +33,9 @@ public class BattleScene : Scene
 
     public override void Enter()
     {
+        _returnField = _player.Field;
+        _returnPlayerPos = _player.Position;
+        _monsterPos = _monster.Position;
         if (_player.Field != null)
         {
             _player.Field[_player.Position.Y, _player.Position.X].OnTileObject = null;

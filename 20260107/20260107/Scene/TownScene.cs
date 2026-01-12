@@ -32,7 +32,7 @@ public class TownScene : Scene
         _field[5, 15].OnTileObject = new Monster();
         _player.Field = _field;
         _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
-        Debug.Log("타운 씬 진입");
+        // Debug.Log("타운 씬 진입");
     }
 
     public override void Update()

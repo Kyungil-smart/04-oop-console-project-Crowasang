@@ -9,7 +9,7 @@ public class Potion : Item, IInteractable
     }
     public override void Use()
     {
-        Owner.Heal(1);
+        Owner.Heal(10);
         
         Inventory.Remove(this);
         Inventory = null;

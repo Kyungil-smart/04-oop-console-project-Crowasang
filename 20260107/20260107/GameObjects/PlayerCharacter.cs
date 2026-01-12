@@ -140,7 +140,11 @@ public class PlayerCharacter : GameObject
         else if (ratio >= 0.4f) _healthGauge = "■■■□□";
         else if (ratio >= 0.2f) _healthGauge = "■■□□□";
         else if (ratio > 0) _healthGauge = "■□□□□";
-        else _healthGauge = "□□□□□";
+        else
+        {
+            _healthGauge = "□□□□□";
+            GameManager.IsGameOver = true;
+        }
         _healthColor = getHpColor(ratio);
     }
 
