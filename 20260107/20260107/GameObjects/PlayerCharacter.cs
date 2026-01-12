@@ -9,6 +9,7 @@ public class PlayerCharacter : GameObject
     private BattleScene _battleScene;
     private string _healthGauge;
     private string _manaGauge;
+
     
     public bool IsActiveControl { get; private set; }
     public PlayerCharacter() => Init();
@@ -20,6 +21,7 @@ public class PlayerCharacter : GameObject
         Health.AddListener(SetHealthGauge);
         Mana.AddListener(SetManaGauge);
         _inventory = new Inventory(this);
+        
     }
 
     public void Update()
@@ -123,17 +125,16 @@ public class PlayerCharacter : GameObject
     
     public void DrawManaGauge()
     {
-        Console.SetCursorPosition(Position.X - 2, Position.Y - 1);
+        // Console.SetCursorPosition(Position.X - 2, Position.Y - 1);
         _manaGauge.Print(ConsoleColor.Blue);
     }
     public void DrawHealthGauge()
     {
-        Console.SetCursorPosition(Position.X - 2, Position.Y - 2);
+        // Console.SetCursorPosition(0, 2);
         _healthGauge.Print(ConsoleColor.Red);
     }
     public void SetHealthGauge(int health)
     {
-
         switch (Health.Value)
         {
             case 5:
@@ -182,6 +183,7 @@ public class PlayerCharacter : GameObject
     public void EnterBattle()
     {
         IsActiveControl = false;
+        SetHealthGauge(Health.Value);
     }
     public void ExitBattle()
     {

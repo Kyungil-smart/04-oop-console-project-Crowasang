@@ -24,6 +24,7 @@ public class BattleScene : Scene
                 _battleField[y, x] = new Tile(pos);
             }
         }
+        DrawBattle();
         _battleMenu = new MenuList();
         _battleMenu.Add("공격", Attack);
         _battleMenu.Add("도망치기", Escape);
@@ -62,10 +63,8 @@ public class BattleScene : Scene
         Console.SetCursorPosition(10, 0);
         Console.WriteLine("전투 시작");
         PrintField();
+        DrawBattle();
         _battleMenu.Render(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
-        if (!IsActive) return;
-        _battleMenu.Render(15, 1);
-        
     }
 
     public override void Exit()
@@ -96,22 +95,12 @@ public class BattleScene : Scene
     {
         SceneManager.ChangePrevScene();
     }
-    public void Select()
-    {
-        if (!IsActive) return;
-        _battleMenu.Select();
-    }
 
-    public void SelectUp()
+    public void DrawBattle()
     {
-        if (!IsActive) return;
-        _battleMenu.SelectUp();
+        Console.SetCursorPosition(0, 1);
+        Console.Write("HP: ");
+        Console.SetCursorPosition(4, 1);
+        _player.DrawHealthGauge();
     }
-
-    public void SelectDown()
-    {
-        if (!IsActive) return;
-        _battleMenu.SelectDown();
-    }
-    
 }
