@@ -1,8 +1,8 @@
 ﻿
 
-public class Monster : GameObject, IInteractable
+public abstract class Monster : GameObject, IInteractable
 {
-    public int _maxHealth = 50;
+    public int _maxHealth;
     public ObservableProperty<int> Health;
     public string Name { get; set; }
     private string _healthGauge;
@@ -21,10 +21,9 @@ public class Monster : GameObject, IInteractable
         }
     }
     public Tile[,] Field { get; set; }
-    public Monster()
+    public Monster(int maxhealth)
     {
-        Symbol = 'M';
-        Name = "몬스터";
+        _maxHealth = maxhealth;
         Health = new ObservableProperty<int>(_maxHealth);
         Health.AddListener(SetHealthGauge);
     }
