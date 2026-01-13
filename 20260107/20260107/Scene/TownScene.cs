@@ -25,68 +25,7 @@ public class TownScene : Scene
         SpawnObject();
         SpawnPlayer();
     }
-
-    private void SpawnPlayer()
-    {
-        while (true)
-        {
-            int x = randX();
-            int y = randY();
-            if (_field[y, x].OnTileObject == null)
-            {
-                _player.Position = new Vector(x, y);
-                _field[y, x].OnTileObject = _player;
-                break;
-            }
-        }
-    }
-    private void SpawnObject()
-    {
-        int count = 0;
-        while (true)
-        {
-            int x = randX();
-            int y = randY();
-            if (_field[y, x].OnTileObject == null)
-            {
-                _field[y, x].OnTileObject = new Potion() { Name = $"Potion{count+1}"};
-                count++;
-            }
-            if (count == 2)
-            {
-                break;
-            }
-        }
-    }
-    private void SpawnMonster()
-    {
-        Monster slime = new Slime();
-        Monster goblin = new Goblin();
-        _monsters.Add(slime);
-        _monsters.Add(goblin);
-        int x;
-        int y;
-        while (true)
-        {
-            x = randX();
-            y = randY();
-            if (_field[y, x].OnTileObject == null)
-            {
-                _field[y, x].OnTileObject = slime;
-                break;
-            }
-        }
-        while (true)
-        {
-            x = randX();
-            y = randY();
-            if (_field[y, x].OnTileObject == null)
-            {
-                _field[y, x].OnTileObject = goblin;
-                break;
-            }
-        }
-    }
+    
     public override void Enter()
     {
         for (int i = _monsters.Count - 1; i >= 0; i--)
@@ -150,7 +89,68 @@ public class TownScene : Scene
             Console.WriteLine();
         }
     }
-
+    
+    private void SpawnPlayer()
+    {
+        while (true)
+        {
+            int x = randX();
+            int y = randY();
+            if (_field[y, x].OnTileObject == null)
+            {
+                _player.Position = new Vector(x, y);
+                _field[y, x].OnTileObject = _player;
+                break;
+            }
+        }
+    }
+    private void SpawnObject()
+    {
+        int count = 0;
+        while (true)
+        {
+            int x = randX();
+            int y = randY();
+            if (_field[y, x].OnTileObject == null)
+            {
+                _field[y, x].OnTileObject = new Potion() { Name = $"Potion{count+1}"};
+                count++;
+            }
+            if (count == 2)
+            {
+                break;
+            }
+        }
+    }
+    private void SpawnMonster()
+    {
+        Monster slime = new Slime();
+        Monster goblin = new Goblin();
+        _monsters.Add(slime);
+        _monsters.Add(goblin);
+        int x;
+        int y;
+        while (true)
+        {
+            x = randX();
+            y = randY();
+            if (_field[y, x].OnTileObject == null)
+            {
+                _field[y, x].OnTileObject = slime;
+                break;
+            }
+        }
+        while (true)
+        {
+            x = randX();
+            y = randY();
+            if (_field[y, x].OnTileObject == null)
+            {
+                _field[y, x].OnTileObject = goblin;
+                break;
+            }
+        }
+    }
     public int randX()
     {
         return _random.Next(0, 19);

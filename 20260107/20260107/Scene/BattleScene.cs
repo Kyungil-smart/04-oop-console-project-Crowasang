@@ -91,6 +91,22 @@ public class BattleScene : Scene
             Console.SetCursorPosition(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
             Console.WriteLine("대기중......");
         }
+        else if (_battleTurn == BattleTurn.Victory)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("【 승 리!!! 】");
+            Console.ResetColor();
+            Thread.Sleep(2000);
+            _player.Field = _prevPlayerField;
+            _player.Position = _prevPlayerPosition;
+            Thread.Sleep(1500);
+            if (_prevPlayerField != null)
+            {
+                _prevPlayerField[_prevPlayerPosition.Y, _prevPlayerPosition.X].OnTileObject = _player;
+            }
+            _player.ExitBattle();
+            SceneManager.Change("Town");
+        }
     }
 
     public override void Exit()
@@ -119,9 +135,9 @@ public class BattleScene : Scene
         if (_monster.Health.Value <= 0)
         {
             _monster.Health.Value = 0;
-            Victory();
+            _battleTurn = BattleTurn.Victory;
+            return;
         }
-        _battleTurn = BattleTurn.mTurn;
         _battleTurn = BattleTurn.mTurn;
     }
 
@@ -161,12 +177,11 @@ public class BattleScene : Scene
         Console.WriteLine("몬스터를 쓰러트렸다");
         _player.Field = _prevPlayerField;
         _player.Position = _prevPlayerPosition;
-        
+        Thread.Sleep(1500);
         if (_prevPlayerField != null)
         {
             _prevPlayerField[_prevPlayerPosition.Y, _prevPlayerPosition.X].OnTileObject = _player;
         }
-        
         _player.ExitBattle();
         SceneManager.Change("Town");
     }
@@ -189,4 +204,5 @@ public enum BattleTurn
 {
     pTurn,
     mTurn,
+    Victory,
 }
