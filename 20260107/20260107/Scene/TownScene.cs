@@ -23,18 +23,38 @@ public class TownScene : Scene
         _player.Field = _field;
         SpawnMonster();
         SpawnObject();
-        _player.Position = new Vector(4, 3);
-        _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
+        SpawnPlayer();
     }
-    private void SpawnObject()
+
+    private void SpawnPlayer()
     {
-        for (int i = 0; i < 2; i++)
+        while (true)
         {
             int x = randX();
             int y = randY();
-            if (_field[x, y].OnTileObject == null)
+            if (_field[y, x].OnTileObject == null)
             {
-                _field[x, y].OnTileObject = new Potion() { Name = $"Potion{i+1}"};
+                _player.Position = new Vector(x, y);
+                _field[y, x].OnTileObject = _player;
+                break;
+            }
+        }
+    }
+    private void SpawnObject()
+    {
+        int count = 0;
+        while (true)
+        {
+            int x = randX();
+            int y = randY();
+            if (_field[y, x].OnTileObject == null)
+            {
+                _field[y, x].OnTileObject = new Potion() { Name = $"Potion{count+1}"};
+                count++;
+            }
+            if (count == 2)
+            {
+                break;
             }
         }
     }
@@ -44,23 +64,25 @@ public class TownScene : Scene
         Monster goblin = new Goblin();
         _monsters.Add(slime);
         _monsters.Add(goblin);
-        int x = randX();
-        int y = randY();
+        int x;
+        int y;
         while (true)
         {
-            if (_field[x, y].OnTileObject == null)
+            x = randX();
+            y = randY();
+            if (_field[y, x].OnTileObject == null)
             {
-                _field[x, y].OnTileObject = slime;
+                _field[y, x].OnTileObject = slime;
                 break;
             }
         }
-        x = randX();
-        y = randY();
         while (true)
         {
-            if (_field[x, y].OnTileObject == null)
+            x = randX();
+            y = randY();
+            if (_field[y, x].OnTileObject == null)
             {
-                _field[x, y].OnTileObject = goblin;
+                _field[y, x].OnTileObject = goblin;
                 break;
             }
         }
@@ -131,10 +153,10 @@ public class TownScene : Scene
 
     public int randX()
     {
-        return _random.Next(0, 9);
+        return _random.Next(0, 19);
     }
     public int randY()
     {
-        return _random.Next(0,20);
+        return _random.Next(0,9);
     }
 }
