@@ -52,7 +52,7 @@ public class BattleScene : Scene
     {
         if (_battleTurn == BattleTurn.mTurn)
         {
-            mAttack();
+            mAttack(_monster);
             return;
         }
         if (_battleTurn == BattleTurn.pTurn)
@@ -96,7 +96,6 @@ public class BattleScene : Scene
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("【 승 리!!! 】");
             Console.ResetColor();
-            Thread.Sleep(2000);
             _player.Field = _prevPlayerField;
             _player.Position = _prevPlayerPosition;
             Thread.Sleep(1500);
@@ -106,6 +105,14 @@ public class BattleScene : Scene
             }
             _player.ExitBattle();
             SceneManager.Change("Town");
+        }
+        else if (_battleTurn == BattleTurn.Defeat)
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("【 패 배ㅠㅠㅠ 】");
+            Console.ResetColor();
+            Thread.Sleep(1500);
+            GameManager.IsGameOver = true;
         }
     }
 
@@ -170,31 +177,17 @@ public class BattleScene : Scene
         Console.SetCursorPosition(_battleField.GetLength(1) - 7, 2);
         _monster.DrawHealthGauge();
     }
-    
-    public void Victory()
-    {
-        Console.SetCursorPosition(_battleField.GetLength(1) / 4, _battleField.GetLength(0) -4);
-        Console.WriteLine("몬스터를 쓰러트렸다");
-        _player.Field = _prevPlayerField;
-        _player.Position = _prevPlayerPosition;
-        Thread.Sleep(1500);
-        if (_prevPlayerField != null)
-        {
-            _prevPlayerField[_prevPlayerPosition.Y, _prevPlayerPosition.X].OnTileObject = _player;
-        }
-        _player.ExitBattle();
-        SceneManager.Change("Town");
-    }
 
-    public void mAttack()
+    public void mAttack(Monster monster)
     {
+        _monster = monster;
         if (_battleTurn != BattleTurn.mTurn) return;
-        int mDamage = 10;
-        _player.Health.Value -= mDamage;
+        _player.Health.Value -= monster.Damage;
         if (_player.Health.Value <= 0)
         {
             _player.Health.Value = 0;
-            GameManager.IsGameOver = true;
+            _battleTurn = BattleTurn.Defeat;
+            return;
         }
         _battleTurn = BattleTurn.pTurn;
     }
@@ -205,4 +198,5 @@ public enum BattleTurn
     pTurn,
     mTurn,
     Victory,
+    Defeat,
 }

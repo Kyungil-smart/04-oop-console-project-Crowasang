@@ -131,7 +131,6 @@ public class PlayerCharacter : GameObject
         else
         {
             _healthGauge = "□□□□□";
-            GameManager.IsGameOver = true;
         }
         _healthColor = getHpColor(ratio);
     }

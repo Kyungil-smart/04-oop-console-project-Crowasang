@@ -6,5 +6,6 @@ public class Goblin : Monster
     {
         Name = "Goblin";
         Symbol = 'G';
+        Damage = 20;
     }
 }

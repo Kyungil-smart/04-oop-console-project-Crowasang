@@ -116,7 +116,7 @@ public class TownScene : Scene
                 _field[y, x].OnTileObject = new Potion() { Name = $"Potion{count+1}"};
                 count++;
             }
-            if (count == 2)
+            if (count == 3)
             {
                 break;
             }

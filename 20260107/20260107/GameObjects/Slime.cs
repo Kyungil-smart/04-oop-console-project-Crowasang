@@ -6,5 +6,6 @@ public class Slime : Monster
     {
         Name = "Slime";
         Symbol = 'S';
+        Damage = 10;
     }
 }

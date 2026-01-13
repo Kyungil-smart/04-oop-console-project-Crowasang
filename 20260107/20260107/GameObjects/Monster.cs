@@ -6,6 +6,7 @@ public abstract class Monster : GameObject, IInteractable
     public ObservableProperty<int> Health;
     public string Name { get; set; }
     private string _healthGauge;
+    public int Damage { get; set; }
     private ConsoleColor _healthColor;
     public bool IsDead
     {
